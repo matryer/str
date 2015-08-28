@@ -1,4 +1,4 @@
-# str
+# str [![GoDoc](https://godoc.org/github.com/matryer/str?status.svg)](https://godoc.org/github.com/matryer/str)
 String parsing package for Go. Converts strings to best guess value type.
 
   * See [parsers.go](https://github.com/matryer/str/blob/master/parsers/parsers.go) for a complete list of parsers.
