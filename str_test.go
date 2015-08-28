@@ -1,19 +1,17 @@
-package str_test
+package str
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/matryer/str/parsers"
-
 	"github.com/cheekybits/is"
-	"github.com/matryer/str"
+	"github.com/matryer/str/parsers"
 )
 
 var tests = []struct {
-	s string        // source string
-	v interface{}   // expected value
-	f str.ParseFunc // expected ParseFunc
+	s string      // source string
+	v interface{} // expected value
+	f ParseFunc   // expected ParseFunc
 }{
 
 	// strings
@@ -119,7 +117,7 @@ var tests = []struct {
 func TestParseWith(t *testing.T) {
 	is := is.New(t)
 	for _, test := range tests {
-		actual, actualFunc := str.ParseWith(test.s)
+		actual, actualFunc := DefaultParser.parseWith(test.s)
 		// assert type and value
 		is.Equal(fmt.Sprintf("%T", actual), fmt.Sprintf("%T", test.v))
 		is.Equal(actual, test.v)
@@ -129,7 +127,7 @@ func TestParseWith(t *testing.T) {
 
 func TestNewParser(t *testing.T) {
 	is := is.New(t)
-	parser := str.New(func(s string) (interface{}, bool) {
+	parser := New(func(s string) (interface{}, bool) {
 		if s == "1" {
 			return 1, true
 		}

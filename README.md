@@ -14,6 +14,13 @@ val := str.Parse("123")
 To add additional `ParseFunc` functions:
 
 ```
-parser := append(DefaultParser, toMyRangeType)
+parser := append(str.DefaultParser, toMyRangeType)
+val := parser.Parse("[1,3]")
+```
+
+To use your own parsers entirely, use `New`:
+
+```
+parser := str.New(toMyRangeType)
 val := parser.Parse("[1,3]")
 ```
