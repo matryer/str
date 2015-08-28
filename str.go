@@ -23,17 +23,34 @@ func New(funcs ...ParseFunc) Parser {
 // the result.
 // If no parsers are successful, returns the string untouched.
 func (p Parser) Parse(s string) interface{} {
+	v, _ := p.ParseWith(s)
+	return v
+}
+
+// ParseWith parses s with each ParseFunc in order returning
+// the result, and returns the ParseFunc that was successful.
+// If no parsers are successful, returns the string untouched
+// and the second argument will be nil.
+func (p Parser) ParseWith(s string) (interface{}, ParseFunc) {
 	for _, try := range p {
 		if val, ok := try(s); ok {
-			return val
+			return val, try
 		}
 	}
-	return s
+	return s, nil
 }
 
 // Parse parses s with the DefaultParser.
+// For more information, see Parser.Parse.
 func Parse(s string) interface{} {
 	return DefaultParser.Parse(s)
+}
+
+// ParseWith parses s with the DefaultParser and returns
+// the and returns the ParseFunc that was successful.
+// For more information, see Parser.ParseWith.
+func ParseWith(s string) (interface{}, ParseFunc) {
+	return DefaultParser.ParseWith(s)
 }
 
 // DefaultParser is the default Parser that includes
