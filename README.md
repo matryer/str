@@ -42,3 +42,12 @@ To use your own parsers entirely, use `New`:
 parser := str.New(toMyRangeType)
 val := parser.Parse("[1,3]")
 ```
+
+### Time
+
+To add parsers for time, import the `parsers` package and use the `Time` method:
+
+```
+parser := append(str.DefaultParser, parsers.Time(time.RFC822))
+val := parser.Parse("02 Jan 06 15:04 MST")
+```

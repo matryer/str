@@ -3,6 +3,7 @@ package str
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/cheekybits/is"
 	"github.com/matryer/str/parsers"
@@ -135,4 +136,15 @@ func TestNewParser(t *testing.T) {
 	})
 	is.Equal(1, parser.Parse("1"))
 	is.Equal("2", parser.Parse("2"))
+}
+
+func TestTime(t *testing.T) {
+	is := is.New(t)
+	timestr := "02 Jan 06 15:04 MST"
+	timeParser := parsers.Time(time.RFC822)
+	parser := append(DefaultParser, timeParser)
+	val, fn := parser.parseWith(timestr)
+	is.OK(fn)
+	is.Equal(val.(time.Time).Format(time.RFC822), timestr)
+	is.Equal(fmt.Sprint(fn), fmt.Sprint(timeParser))
 }
